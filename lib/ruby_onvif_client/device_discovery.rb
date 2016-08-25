@@ -14,16 +14,17 @@ module ONVIF
             @options = {
             }.merge(options)
             searcher = WSDiscovery.search(
-                env_namespaces: { 
+                env_namespaces: {
                     "xmlns:dn" => "http://www.onvif.org/ver10/network/wsdl"
-                }, 
+                },
                 types: "dn:NetworkVideoTransmitter"
             )
             searcher.discovery_responses.subscribe do |notification|
                 device = {
                     ep_address: notification[:probe_matches][:probe_match][:endpoint_reference][:address],
                     types: notification[:probe_matches][:probe_match][:types],
-                    device_ip: URI(notification[:probe_matches][:probe_match][:x_addrs]).host,
+                    device_ip: URI(notification[:probe_matches][:probe_match][:x_addrs].split(' ').first).host,
+                    device_port: URI(notification[:probe_matches][:probe_match][:x_addrs].split(' ').first).port,
                     device_service_address: notification[:probe_matches][:probe_match][:x_addrs],
                     scopes: notification[:probe_matches][:probe_match][:scopes].split(' '),
                     metadata_version: notification[:probe_matches][:probe_match][:metadata_version]
@@ -33,4 +34,3 @@ module ONVIF
         end
     end
 end
-

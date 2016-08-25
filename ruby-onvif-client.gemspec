@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 Gem::Specification.new do |s|
     s.name        = 'ruby_onvif_client'
     s.version     = '0.1.6'
@@ -16,5 +17,5 @@ Gem::Specification.new do |s|
     s.add_dependency 'em-http-server'
     s.add_dependency 'activesupport'
     s.add_dependency 'akami'
+    s.add_dependency 'log_switch', '0.1.4'
 end
-
